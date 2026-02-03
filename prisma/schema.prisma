@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -11,4 +5,57 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  role      Role     @default(EDITOR)
+  name      String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  contents Content[]
+
+  @@map("users")
+}
+
+model Content {
+  id     Int    @id @default(autoincrement())
+  title  String
+  body   String @db.Text
+  sector Sector
+  status Status @default(DRAFT)
+
+  created_by Int
+  author     User @relation(fields: [created_by], references: [id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@index([status])
+  @@index([sector])
+  @@index([created_at])
+  @@index([created_by, status])
+  @@map("contents")
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+  REVIEWER
+}
+
+enum Status {
+  DRAFT
+  IN_REVIEW
+  PUBLISHED
+}
+
+enum Sector {
+  TECHNOLOGY
+  HEALTHCARE
+  FINANCE
+  EDUCATION
+  OTHER
 }
