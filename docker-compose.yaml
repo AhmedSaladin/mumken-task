@@ -1,0 +1,25 @@
+# docker-compose.yml
+version: '3.8'
+services:
+  postgres:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_DB: qitae_db
+      POSTGRES_USER: qitae_user
+      POSTGRES_PASSWORD: qitae_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://qitae_user:qitae_pass@postgres:5432/qitae_db
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
