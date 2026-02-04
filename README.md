@@ -30,7 +30,7 @@ This project implements a content management workflow with three distinct states
 ## Project Structure
 
 ```
-qitae-backend/
+mumken-task/
 ├── prisma/
 │   ├── migrations/           # Database migrations
 │   ├── schema.prisma         # Prisma schema definition
@@ -81,8 +81,8 @@ qitae-backend/
 1. **Clone the repository**
 
    ```bash
-   git clone <repository-url>
-   cd qitae-backend
+   git clone https://github.com/AhmedSaladin/mumken-task.git
+   cd mumken-task
    ```
 
 2. **Create environment file**
