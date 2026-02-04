@@ -18,6 +18,8 @@ services:
       - "3000:3000"
     environment:
       DATABASE_URL: postgresql://qitae_user:qitae_pass@postgres:5432/qitae_db
+      NODE_ENV: production
+      PORT: 3000
     depends_on:
       - postgres
 
